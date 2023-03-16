@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.29.3"
+  },
   "devDependencies": {
     "css-loader": "^6.7.3",
     "eslint": "^8.36.0",
