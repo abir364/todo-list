@@ -8,7 +8,9 @@ const createHeader = () => {
     'items-center',
     'justify-around',
     'sticky',
-    'top-0'
+    'top-0',
+    'col-start-1',
+    'col-end-3'
   );
 
   const logoBlock = document.createElement('div');
