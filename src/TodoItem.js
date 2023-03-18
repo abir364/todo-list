@@ -1,9 +1,12 @@
+import format from 'date-fns/format';
+
 export default class TodoItem {
   constructor(title, description, dueDate, priority) {
     this.title = title;
     this.description = description;
-    this.dueDate = dueDate;
+    this.dueDate = format(dueDate, 'do MMMM');
     this.priority = priority;
+    this.done = false;
   }
 
   getTitle() {
@@ -36,5 +39,17 @@ export default class TodoItem {
 
   setPriority(p) {
     this.priority = p;
+  }
+
+  getDone() {
+    return this.done;
+  }
+
+  setDone(d) {
+    this.done = Boolean(d);
+  }
+
+  changeDone() {
+    this.done = !this.done;
   }
 }

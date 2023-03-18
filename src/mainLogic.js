@@ -1,60 +1,45 @@
-import format from 'date-fns/format';
-
 import Folder from './Folder';
 import TodoItem from './TodoItem';
-
-import changeOnMain from './mainDOM';
 
 const homeItems = [
   new TodoItem(
     'Gym',
     'Got to go to the gym and work out for 2 hours',
-    format(new Date(), 'dd/MM/yyyy'),
-    'high'
+    new Date(),
+    'medium'
   ),
   new TodoItem(
-    'Cook Lunch',
-    'Make curry and rice',
-    format(new Date(), 'dd/MM/yyyy'),
+    'Cooking',
+    'Make curry and rice for lunch',
+    new Date(),
     'medium'
   ),
   new TodoItem(
     'Assignment',
     'Finish math assignment before 8PM',
-    format(new Date(), 'dd/MM/yyyy'),
+    new Date(),
     'high'
   ),
   new TodoItem(
     'Clean Book Shelves',
     'Book Shelves have dust. Need to clean today',
-    format(new Date(), 'dd/MM/yyyy'),
+    new Date(),
     'low'
   ),
 ];
+// console.log(homeItems);
+homeItems[1].changeDone();
+homeItems[2].setDone(true);
+// console.log(homeItems);
 
 const todayItems = [
-  new TodoItem(
-    'Homework',
-    'Finish philosophy homework',
-    format(new Date(), 'dd/MM/yyyy'),
-    'medium'
-  ),
-  new TodoItem(
-    'Woodwork',
-    'Work on the wooden spoon',
-    format(new Date(), 'dd/MM/yyyy'),
-    'low'
-  ),
-  new TodoItem(
-    'Group work',
-    'Meeting with group',
-    format(new Date(), 'dd/MM/yyyy'),
-    'high'
-  ),
+  new TodoItem('Homework', 'Finish philosophy homework', new Date(), 'medium'),
+  new TodoItem('Woodwork', 'Work on the wooden spoon', new Date(), 'low'),
+  new TodoItem('Group work', 'Meeting with group', new Date(), 'high'),
   new TodoItem(
     'Laundry',
     'Clothes are dirty. Need to do laundry today',
-    format(new Date(), 'dd/MM/yyyy'),
+    new Date(),
     'medium'
   ),
 ];
@@ -69,7 +54,11 @@ let selected = home;
 
 export const changeSelected = (selection) => {
   selected = selection;
-  // changeOnMain();
+};
+
+export const handleDone = (id) => {
+  selected.todoList[id].changeDone();
+  console.log(selected.todoList[id]);
 };
 
 export default function getSelected() {
@@ -77,3 +66,4 @@ export default function getSelected() {
 }
 
 changeSelected(today);
+changeSelected(thisWeek);

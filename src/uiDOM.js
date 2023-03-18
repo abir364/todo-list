@@ -1,6 +1,6 @@
 import createHeader from './headerDOM';
 import createSideBar from './sidebarDOM';
-import generateMain from './mainDOM';
+import mainDOM from './mainDOM';
 import createFooter from './footerDOM';
 import getSelected from './mainLogic';
 
@@ -10,7 +10,7 @@ const generateUI = () => {
   content.append(
     createHeader(),
     createSideBar(),
-    generateMain(getSelected()),
+    mainDOM.generateMain(getSelected()),
     createFooter()
   );
 };
