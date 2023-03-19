@@ -58,7 +58,6 @@ export const changeSelected = (selection) => {
 
 export const handleDone = (id) => {
   selected.todoList[id].changeDone();
-  console.log(selected.todoList[id]);
 };
 
 export default function getSelected() {
@@ -67,3 +66,4 @@ export default function getSelected() {
 
 changeSelected(today);
 changeSelected(thisWeek);
+changeSelected(home);

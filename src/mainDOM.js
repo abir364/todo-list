@@ -1,6 +1,8 @@
 import { handleDone } from './mainLogic';
 
 const mainDOM = (() => {
+  let data;
+
   const selectPriorityStyling = (container, p) => {
     if (p === 'low') {
       container.classList.add('border-l-4', 'border-green-500');
@@ -13,6 +15,7 @@ const mainDOM = (() => {
 
   const createItem = (e, id) => {
     const container = document.createElement('div');
+    container.setAttribute('data-id', id);
     container.classList.add(
       'item',
       'flex',
@@ -26,7 +29,6 @@ const mainDOM = (() => {
       'border-r-transparent'
     );
     const checkbox = document.createElement('span');
-    checkbox.setAttribute('data-id', id);
     checkbox.classList.add(
       'check',
       'material-symbols-outlined',
@@ -41,6 +43,7 @@ const mainDOM = (() => {
     task.classList.add('py-1', 'px-8', 'flex-1');
     date.classList.add('py-1', 'px-8');
     details.classList.add(
+      'detail',
       'px-2',
       'text-rose-500',
       'text-sm',
@@ -85,7 +88,7 @@ const mainDOM = (() => {
   };
 
   const generateMain = (selected) => {
-    const data = selected;
+    data = selected;
     const cardsBox = document.createElement('div');
 
     const title = document.createElement('div');
@@ -110,12 +113,66 @@ const mainDOM = (() => {
           ev.textContent === 'check_box'
             ? 'check_box_outline_blank'
             : 'check_box';
-        handleDone(ev.dataset.id);
+        handleDone(ev.parentNode.dataset.id);
       })
     );
   };
 
-  return { generateMain, clickCheckbox };
+  const createDetailsModal = (ev) => {
+    const outerDiv = document.createElement('div');
+    outerDiv.setAttribute('id', 'modal');
+    outerDiv.classList.add(
+      'bg-black',
+      'bg-opacity-50',
+      'absolute',
+      'inset-0',
+      'flex',
+      'justify-center',
+      'items-center'
+    );
+    const innerDiv = document.createElement('div');
+    outerDiv.appendChild(innerDiv);
+    innerDiv.classList.add('bg-gray-200', 'p-2', 'rounded-lg');
+
+    const topLine = document.createElement('div');
+    topLine.classList.add('flex', 'justify-between', 'items-center');
+    const title = document.createElement('div');
+    title.classList.add('text-lg', 'font-bold', 'text-rose-500');
+    title.textContent = data.todoList[ev.parentNode.dataset.id].getTitle();
+    const exit = document.createElement('span');
+    exit.setAttribute('id', 'close');
+    exit.classList.add(
+      'material-symbols-outlined',
+      'pl-4',
+      'cursor-pointer',
+      'text-lg',
+      'hover:text-red-500'
+    );
+    exit.textContent = 'close';
+    topLine.append(title, exit);
+    const des = document.createElement('div');
+    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
+    des.classList.add('mt-4', 'text-xl');
+    innerDiv.append(topLine, des);
+
+    return outerDiv;
+  };
+
+  const clickDetails = () => {
+    const events = document.querySelectorAll('.detail');
+    events.forEach((ev) =>
+      ev.addEventListener('click', () => {
+        const content = document.getElementById('content');
+        content.appendChild(createDetailsModal(ev));
+        const close = document.getElementById('close');
+        close.addEventListener('click', () => {
+          content.removeChild(document.getElementById('modal'));
+        });
+      })
+    );
+  };
+
+  return { generateMain, clickCheckbox, clickDetails };
 })();
 
 export default mainDOM;

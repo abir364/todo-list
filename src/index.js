@@ -5,3 +5,4 @@ import generateUI from './uiDOM';
 
 generateUI();
 mainDOM.clickCheckbox();
+mainDOM.clickDetails();
