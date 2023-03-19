@@ -1,4 +1,4 @@
-import { handleDone } from './mainLogic';
+import { handleDone, handleDelete } from './mainLogic';
 
 const mainDOM = (() => {
   let data;
@@ -57,6 +57,7 @@ const mainDOM = (() => {
     details.textContent = 'Details';
     const edit = document.createElement('span');
     edit.classList.add(
+      'edit',
       'material-symbols-outlined',
       'text-sm',
       'px-2',
@@ -70,6 +71,7 @@ const mainDOM = (() => {
     edit.textContent = 'edit';
     const del = document.createElement('span');
     del.classList.add(
+      'delete',
       'material-symbols-outlined',
       'text-sm',
       'px-2',
@@ -96,6 +98,7 @@ const mainDOM = (() => {
     title.textContent = data.name;
     cardsBox.appendChild(title);
     const items = document.createElement('div');
+    items.setAttribute('id', 'items');
     items.classList.add('flex', 'flex-col', 'items-center', 'gap-2');
     for (let i = 0; i < data.todoList.length; i++) {
       items.append(createItem(data.todoList[i], i));
@@ -172,7 +175,32 @@ const mainDOM = (() => {
     );
   };
 
-  return { generateMain, clickCheckbox, clickDetails };
+  const clickDelete = () => {
+    const events = document.querySelectorAll('.delete');
+    events.forEach((ev) =>
+      ev.addEventListener('click', () => {
+        handleDelete(ev.parentNode.dataset.id);
+        const items = document.getElementById('items');
+        items.removeChild(ev.parentNode);
+      })
+    );
+  };
+
+  const clickEdit = () => {
+    const events = document.querySelectorAll('.edit');
+    events.forEach((ev) =>
+      ev.addEventListener('click', () => {
+        const content = document.getElementById('content');
+        content.appendChild(createDetailsModal(ev));
+        const close = document.getElementById('close');
+        close.addEventListener('click', () => {
+          content.removeChild(document.getElementById('modal'));
+        });
+      })
+    );
+  };
+
+  return { generateMain, clickCheckbox, clickDetails, clickDelete, clickEdit };
 })();
 
 export default mainDOM;

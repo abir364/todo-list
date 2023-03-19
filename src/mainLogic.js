@@ -60,6 +60,11 @@ export const handleDone = (id) => {
   selected.todoList[id].changeDone();
 };
 
+export const handleDelete = (id) => {
+  selected.todoList.splice(id, 1);
+  console.log(selected.todoList);
+};
+
 export default function getSelected() {
   return selected;
 }
@@ -67,3 +72,4 @@ export default function getSelected() {
 changeSelected(today);
 changeSelected(thisWeek);
 changeSelected(home);
+console.log(selected.todoList);
