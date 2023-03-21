@@ -1,4 +1,4 @@
-import { handleDone, handleDelete } from './mainLogic';
+import { handleDone, getTitle } from './mainLogic';
 
 const mainDOM = (() => {
   let data;
@@ -90,18 +90,19 @@ const mainDOM = (() => {
   };
 
   const generateMain = (selected) => {
-    data = selected;
+    data = JSON.parse(selected);
     const cardsBox = document.createElement('div');
 
     const title = document.createElement('div');
     title.classList.add('text-3xl', 'text-rose-500', 'py-2', 'px-4');
-    title.textContent = data.name;
+    title.textContent = getTitle();
     cardsBox.appendChild(title);
+
     const items = document.createElement('div');
     items.setAttribute('id', 'items');
     items.classList.add('flex', 'flex-col', 'items-center', 'gap-2');
-    for (let i = 0; i < data.todoList.length; i++) {
-      items.append(createItem(data.todoList[i], i));
+    for (let i = 0; i < data.length; i++) {
+      items.append(createItem(data[i], i));
     }
     cardsBox.appendChild(items);
 
@@ -141,7 +142,7 @@ const mainDOM = (() => {
     topLine.classList.add('flex', 'justify-between', 'items-center');
     const title = document.createElement('div');
     title.classList.add('text-lg', 'font-bold', 'text-rose-500');
-    title.textContent = data.todoList[ev.parentNode.dataset.id].getTitle();
+    title.textContent = data[ev.parentNode.dataset.id].getTitle(); // issues?
     const exit = document.createElement('span');
     exit.setAttribute('id', 'close');
     exit.classList.add(
@@ -154,7 +155,7 @@ const mainDOM = (() => {
     exit.textContent = 'close';
     topLine.append(title, exit);
     const des = document.createElement('div');
-    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
+    des.textContent = data[ev.parentNode.dataset.id].getDescription(); // issues?
     des.classList.add('mt-4', 'text-xl');
     innerDiv.append(topLine, des);
 
@@ -175,23 +176,62 @@ const mainDOM = (() => {
     );
   };
 
-  const clickDelete = () => {
-    const events = document.querySelectorAll('.delete');
-    events.forEach((ev) =>
-      ev.addEventListener('click', () => {
-        handleDelete(ev.parentNode.dataset.id);
-        const items = document.getElementById('items');
-        items.removeChild(ev.parentNode);
-      })
-    );
-  };
+  // const clickDelete = () => {
+  //   const events = document.querySelectorAll('.delete');
+  //   events.forEach((ev) =>
+  //     ev.addEventListener('click', () => {
+  //       handleDelete(ev.parentNode.dataset.id);
+  //       const items = document.getElementById('items');
+  //       items.removeChild(ev.parentNode);
+  //     })
+  //   );
+  // };
 
+  const createEditModal = (ev) => {
+    const outerDiv = document.createElement('div');
+    outerDiv.setAttribute('id', 'modal');
+    outerDiv.classList.add(
+      'bg-black',
+      'bg-opacity-50',
+      'absolute',
+      'inset-0',
+      'flex',
+      'justify-center',
+      'items-center'
+    );
+    const innerDiv = document.createElement('div');
+    outerDiv.appendChild(innerDiv);
+    innerDiv.classList.add('bg-gray-200', 'p-2', 'rounded-lg');
+
+    const topLine = document.createElement('div');
+    topLine.classList.add('flex', 'justify-between', 'items-center');
+    const title = document.createElement('div');
+    title.classList.add('text-lg', 'font-bold', 'text-rose-500');
+    title.textContent = 'Edit';
+    const exit = document.createElement('span');
+    exit.setAttribute('id', 'close');
+    exit.classList.add(
+      'material-symbols-outlined',
+      'pl-4',
+      'cursor-pointer',
+      'text-lg',
+      'hover:text-red-500'
+    );
+    exit.textContent = 'close';
+    topLine.append(title, exit);
+    const des = document.createElement('div');
+    des.textContent = data[ev.parentNode.dataset.id].getDescription();
+    des.classList.add('mt-4', 'text-xl');
+    innerDiv.append(topLine, des);
+
+    return outerDiv;
+  };
   const clickEdit = () => {
     const events = document.querySelectorAll('.edit');
     events.forEach((ev) =>
       ev.addEventListener('click', () => {
         const content = document.getElementById('content');
-        content.appendChild(createDetailsModal(ev));
+        content.appendChild(createEditModal(ev));
         const close = document.getElementById('close');
         close.addEventListener('click', () => {
           content.removeChild(document.getElementById('modal'));
@@ -200,7 +240,7 @@ const mainDOM = (() => {
     );
   };
 
-  return { generateMain, clickCheckbox, clickDetails, clickDelete, clickEdit };
+  return { generateMain, clickCheckbox, clickDetails, clickEdit };
 })();
 
 export default mainDOM;
