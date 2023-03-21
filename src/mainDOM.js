@@ -1,4 +1,4 @@
-import { handleDone, getTitle } from './mainLogic';
+import { handleDone, handleDelete, getTitle } from './mainLogic';
 
 const mainDOM = (() => {
   let data;
@@ -95,14 +95,14 @@ const mainDOM = (() => {
 
     const title = document.createElement('div');
     title.classList.add('text-3xl', 'text-rose-500', 'py-2', 'px-4');
-    title.textContent = getTitle();
+    title.textContent = data.name;
     cardsBox.appendChild(title);
 
     const items = document.createElement('div');
     items.setAttribute('id', 'items');
     items.classList.add('flex', 'flex-col', 'items-center', 'gap-2');
-    for (let i = 0; i < data.length; i++) {
-      items.append(createItem(data[i], i));
+    for (let i = 0; i < data.todoList.length; i++) {
+      items.append(createItem(data.todoList[i], i));
     }
     cardsBox.appendChild(items);
 
@@ -142,7 +142,7 @@ const mainDOM = (() => {
     topLine.classList.add('flex', 'justify-between', 'items-center');
     const title = document.createElement('div');
     title.classList.add('text-lg', 'font-bold', 'text-rose-500');
-    title.textContent = data[ev.parentNode.dataset.id].getTitle(); // issues?
+    title.textContent = data.todoList[ev.parentNode.dataset.id].getTitle();
     const exit = document.createElement('span');
     exit.setAttribute('id', 'close');
     exit.classList.add(
@@ -155,7 +155,7 @@ const mainDOM = (() => {
     exit.textContent = 'close';
     topLine.append(title, exit);
     const des = document.createElement('div');
-    des.textContent = data[ev.parentNode.dataset.id].getDescription(); // issues?
+    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
     des.classList.add('mt-4', 'text-xl');
     innerDiv.append(topLine, des);
 
@@ -220,7 +220,7 @@ const mainDOM = (() => {
     exit.textContent = 'close';
     topLine.append(title, exit);
     const des = document.createElement('div');
-    des.textContent = data[ev.parentNode.dataset.id].getDescription();
+    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
     des.classList.add('mt-4', 'text-xl');
     innerDiv.append(topLine, des);
 

@@ -6,7 +6,7 @@ import getSelected from './mainLogic';
 
 if (localStorage.getItem('selected') === null) {
   const selected = getSelected();
-  localStorage.setItem('selected', JSON.stringify(selected.todoList));
+  localStorage.setItem('selected', JSON.stringify(selected));
 }
 generateUI();
 mainDOM.clickCheckbox();

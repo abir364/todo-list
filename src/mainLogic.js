@@ -50,25 +50,18 @@ const home = new Folder('Home', homeItems);
 const today = new Folder('Today', todayItems);
 const thisWeek = new Folder('This Week', thisWeekItems);
 
-let selected;
-let s;
-
-if (localStorage.getItem('selected') === null) {
-  selected = home;
-  console.log(selected);
-  s = localStorage.setItem('selected', JSON.stringify(selected.todoList));
-  console.log(s);
-}
-
+let selected = home;
+console.log(JSON.parse(JSON.stringify(home)));
 export const changeSelected = (selection) => {
   selected = selection;
-  s = localStorage.setItem('selected', JSON.stringify(selected.todoList));
+  localStorage.setItem('selected', JSON.stringify(selected));
 };
 
 export const handleDone = (id) => {
   selected.todoList[id].changeDone();
-  s = localStorage.setItem('selected', JSON.stringify(selected.todoList));
-  console.log(JSON.parse(s));
+  localStorage.setItem('selected', JSON.stringify(selected));
+  console.log(JSON.parse(localStorage.getItem('selected')));
+  console.log(selected);
 };
 
 export const getTitle = () => {
@@ -81,7 +74,7 @@ export const getTitle = () => {
 // };
 
 export default function getSelected() {
-  return s;
+  return selected;
 }
 
 changeSelected(today);
