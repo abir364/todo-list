@@ -142,7 +142,7 @@ const mainDOM = (() => {
     topLine.classList.add('flex', 'justify-between', 'items-center');
     const title = document.createElement('div');
     title.classList.add('text-lg', 'font-bold', 'text-rose-500');
-    title.textContent = data.todoList[ev.parentNode.dataset.id].getTitle();
+    title.textContent = data.todoList[ev.parentNode.dataset.id].title;
     const exit = document.createElement('span');
     exit.setAttribute('id', 'close');
     exit.classList.add(
@@ -155,7 +155,7 @@ const mainDOM = (() => {
     exit.textContent = 'close';
     topLine.append(title, exit);
     const des = document.createElement('div');
-    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
+    des.textContent = data.todoList[ev.parentNode.dataset.id].description;
     des.classList.add('mt-4', 'text-xl');
     innerDiv.append(topLine, des);
 
@@ -220,7 +220,7 @@ const mainDOM = (() => {
     exit.textContent = 'close';
     topLine.append(title, exit);
     const des = document.createElement('div');
-    des.textContent = data.todoList[ev.parentNode.dataset.id].getDescription();
+    des.textContent = data.todoList[ev.parentNode.dataset.id].description;
     des.classList.add('mt-4', 'text-xl');
     innerDiv.append(topLine, des);
 
