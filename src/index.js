@@ -11,5 +11,5 @@ if (localStorage.getItem('selected') === null) {
 generateUI();
 mainDOM.clickCheckbox();
 mainDOM.clickDetails();
-// mainDOM.clickDelete();
+mainDOM.clickDelete();
 mainDOM.clickEdit();

@@ -1,4 +1,4 @@
-import { handleDone, handleDelete, getTitle } from './mainLogic';
+import { handleDone, handleDelete } from './mainLogic';
 
 const mainDOM = (() => {
   let data;
@@ -176,16 +176,16 @@ const mainDOM = (() => {
     );
   };
 
-  // const clickDelete = () => {
-  //   const events = document.querySelectorAll('.delete');
-  //   events.forEach((ev) =>
-  //     ev.addEventListener('click', () => {
-  //       handleDelete(ev.parentNode.dataset.id);
-  //       const items = document.getElementById('items');
-  //       items.removeChild(ev.parentNode);
-  //     })
-  //   );
-  // };
+  const clickDelete = () => {
+    const events = document.querySelectorAll('.delete');
+    events.forEach((ev) =>
+      ev.addEventListener('click', () => {
+        handleDelete(ev.parentNode.dataset.id);
+        const items = document.getElementById('items');
+        items.removeChild(ev.parentNode);
+      })
+    );
+  };
 
   const createEditModal = (ev) => {
     const outerDiv = document.createElement('div');
@@ -240,7 +240,7 @@ const mainDOM = (() => {
     );
   };
 
-  return { generateMain, clickCheckbox, clickDetails, clickEdit };
+  return { generateMain, clickCheckbox, clickDetails, clickDelete, clickEdit };
 })();
 
 export default mainDOM;

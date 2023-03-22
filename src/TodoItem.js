@@ -50,6 +50,10 @@ export default class TodoItem {
   }
 
   changeDone() {
-    this.done = !this.done;
+    if (this.done) {
+      this.done = false;
+    } else {
+      this.done = true;
+    }
   }
 }
