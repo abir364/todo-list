@@ -18,10 +18,13 @@ const createSideBar = () => {
   sidebar.appendChild(content);
 
   const homeBtn = document.createElement('button');
+  homeBtn.classList.add('hover:text-xl');
   homeBtn.textContent = 'Home';
   const todayBtn = document.createElement('button');
+  todayBtn.classList.add('hover:text-xl');
   todayBtn.textContent = 'Today';
   const weekBtn = document.createElement('button');
+  weekBtn.classList.add('hover:text-xl');
   weekBtn.textContent = 'This week';
   content.append(homeBtn, todayBtn, weekBtn);
 
